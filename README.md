@@ -94,7 +94,16 @@ git clone https://github.com/VineetS46/SnapQueue.git
 cd SnapQueue
 ```
 
-### 2. Configure MySQL
+### 2. Install Maven
+```bash
+winget install Apache.Maven
+```
+Verify:
+```bash
+mvn -version
+```
+
+### 3. Configure MySQL
 Open `src/main/resources/application.properties` and update your password:
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3308/snapqueuedb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
@@ -102,12 +111,12 @@ spring.datasource.username=root
 spring.datasource.password=your_mysql_password
 ```
 
-### 3. Run the application
+### 4. Run the application
 ```bash
 mvn spring-boot:run
 ```
 
-### 4. Open in browser
+### 5. Open in browser
 ```
 http://localhost:8080/login.html
 ```
