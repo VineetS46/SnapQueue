@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SnapQueue – Report an Issue</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body { background: #f0f2f5; }
+    .navbar { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.07); }
+    .brand-title { font-weight: 800; font-size: 1.25rem; color: #0d6efd; }
+    .card { border: none; border-radius: 14px; box-shadow: 0 4px 24px rgba(0,0,0,.08); }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar px-4 py-3 mb-4">
+    <span class="brand-title">📬 SnapQueue</span>
+    <div class="ms-4 d-flex gap-3" id="navLinks"></div>
+    <div class="ms-auto d-flex align-items-center gap-3">
+      <span id="userInfo" class="text-muted small fw-semibold"></span>
+      <button class="btn btn-outline-danger btn-sm" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container d-flex justify-content-center">
+    <div class="card p-4" style="width:100%;max-width:560px;">
+      <h5 class="fw-bold mb-1">Report an Issue</h5>
+      <p class="text-muted small mb-4">Submit your feedback — it will be reviewed by a manager.</p>
+
+      <div id="successAlert" class="alert alert-success d-none"></div>
+      <div id="errorAlert"   class="alert alert-danger  d-none"></div>
+
+      <form id="feedbackForm">
+        <div class="mb-3">
+          <label class="form-label fw-semibold small">Issue Description</label>
+          <textarea id="message" class="form-control" rows="4"
+                    placeholder="Describe the issue in detail (min 10 characters)..."
+                    minlength="10" required></textarea>
+        </div>
+        <div class="mb-4">
+          <label class="form-label fw-semibold small">Category</label>
+          <select id="category" class="form-select" required>
+            <option value="BUG">🐛 Bug</option>
+            <option value="SUGGESTION">💡 Suggestion</option>
+            <option value="APPRECIATION">🌟 Appreciation</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 fw-semibold">Submit Issue</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let currentRole = null;
+
+    async function init() {
+      const res = await fetch('/api/auth/me');
+      if (res.status === 401) { window.location.href = 'login.html'; return; }
+      const emp = await res.json();
+
+      if (emp.role === 'ADMIN') { window.location.href = 'admin-dashboard.html'; return; }
+
+      currentRole = emp.role;
+      document.getElementById('userInfo').textContent = `${emp.fullName} · ${emp.employeeId}`;
+
+      const navLinks = document.getElementById('navLinks');
+      if (emp.role === 'EMPLOYEE') {
+        navLinks.innerHTML = `
+          <a href="employee-dashboard.html" class="nav-link text-secondary">My Issues</a>
+          <a href="submit.html" class="nav-link fw-semibold text-primary">Submit Issue</a>`;
+      } else {
+        navLinks.innerHTML = `
+          <a href="manager-dashboard.html" class="nav-link text-secondary">Dashboard</a>
+          <a href="submit.html" class="nav-link fw-semibold text-primary">Submit Issue</a>`;
+      }
+    }
+
+    document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const successEl = document.getElementById('successAlert');
+      const errorEl   = document.getElementById('errorAlert');
+      successEl.classList.add('d-none');
+      errorEl.classList.add('d-none');
+
+      const message  = document.getElementById('message').value.trim();
+      const category = document.getElementById('category').value;
+
+      if (message.length < 10) {
+        errorEl.textContent = 'Issue description must be at least 10 characters.';
+        errorEl.classList.remove('d-none');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message, category })
+        });
+
+        if (res.status === 201) {
+          const msg = currentRole === 'EMPLOYEE'
+            ? 'Issue submitted! Pending manager review.'
+            : 'Issue submitted! Sent directly to Admin.';
+          successEl.textContent = msg;
+          successEl.classList.remove('d-none');
+          document.getElementById('feedbackForm').reset();
+
+          const redirect = currentRole === 'EMPLOYEE'
+            ? 'employee-dashboard.html' : 'manager-dashboard.html';
+          setTimeout(() => { window.location.href = redirect; }, 2000);
+        } else {
+          const data = await res.json();
+          errorEl.textContent = data.message || 'Failed to submit. Please try again.';
+          errorEl.classList.remove('d-none');
+        }
+      } catch {
+        errorEl.textContent = 'Server error. Please try again.';
+        errorEl.classList.remove('d-none');
+      }
+    });
+
+    async function logout() {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      sessionStorage.clear();
+      window.location.href = 'login.html';
+    }
+
+    init();
+  </script>
+</body>
+</html>
