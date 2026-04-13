@@ -177,26 +177,189 @@ SELECT * FROM feedback;
 
 ---
 
-## 📸 Screenshots
-
-> Login page with quick-login cards for all three roles.
-
-![Login](https://via.placeholder.com/800x400?text=Login+Page)
-
-> Employee dashboard showing issue status and rejection reasons.
-
-![Employee Dashboard](https://via.placeholder.com/800x400?text=Employee+Dashboard)
-
-> Manager dashboard with approve/reject workflow.
-
-![Manager Dashboard](https://via.placeholder.com/800x400?text=Manager+Dashboard)
-
-> Admin dashboard with resolve action.
-
-![Admin Dashboard](https://via.placeholder.com/800x400?text=Admin+Dashboard)
-
----
 
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+## 🛠️ Installation Guide — Everything You Need
+
+Follow these steps from scratch on a fresh Windows machine.
+
+---
+
+### 1. Install Java 17
+
+**Download:**
+https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
+
+Pick → `Windows x64 Installer (.exe)` → install it.
+
+**Verify installation:**
+```bash
+java -version
+```
+Expected output:
+```
+java version "17.x.x"
+```
+
+**Set JAVA_HOME (if not auto-set):**
+```bash
+# In Windows search → "Environment Variables"
+# Under System Variables → New
+# Variable name:  JAVA_HOME
+# Variable value: C:\Program Files\Java\jdk-17
+#
+# Then edit PATH → add:  %JAVA_HOME%\bin
+```
+
+---
+
+### 2. Install Maven
+
+**Download:**
+https://maven.apache.org/download.cgi
+
+Pick → `apache-maven-3.x.x-bin.zip` → extract to `C:\maven`
+
+**Set environment variables:**
+```bash
+# System Variables → New
+# Variable name:  MAVEN_HOME
+# Variable value: C:\maven\apache-maven-3.x.x
+#
+# Edit PATH → add:  %MAVEN_HOME%\bin
+```
+
+**Verify installation:**
+```bash
+mvn -version
+```
+Expected output:
+```
+Apache Maven 3.x.x
+Java version: 17.x.x
+```
+
+---
+
+### 3. Install MySQL
+
+**Download MySQL Installer:**
+https://dev.mysql.com/downloads/installer/
+
+Pick → `mysql-installer-community-8.x.x.msi` → run installer.
+
+During setup:
+- Choose **Developer Default** setup type
+- Set root password (remember it — you'll need it in `application.properties`)
+- Default port is `3306` — if yours is `3308`, note that down
+
+**Verify MySQL is running:**
+```bash
+mysql -u root -p
+```
+Enter your password. You should see the MySQL prompt:
+```
+mysql>
+```
+
+**Check which port MySQL is on:**
+```sql
+SHOW VARIABLES LIKE 'port';
+```
+
+Type `exit` to quit.
+
+---
+
+### 4. Install Git
+
+**Download:**
+https://git-scm.com/download/win
+
+Run the installer with default options.
+
+**Verify installation:**
+```bash
+git --version
+```
+Expected output:
+```
+git version 2.x.x.windows.x
+```
+
+---
+
+### 5. Clone & Run SnapQueue
+
+**Step 1 — Clone the repository:**
+```bash
+git clone https://github.com/VineetS46/SnapQueue.git
+cd SnapQueue
+```
+
+**Step 2 — Update your MySQL password:**
+
+Open `src/main/resources/application.properties` and edit:
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3308/snapqueuedb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+spring.datasource.username=root
+spring.datasource.password=your_mysql_password_here
+```
+> Change `3308` to `3306` if that's your MySQL port.
+
+**Step 3 — Build the project:**
+```bash
+mvn clean install -DskipTests
+```
+
+**Step 4 — Run the application:**
+```bash
+mvn spring-boot:run
+```
+
+You should see:
+```
+Tomcat started on port(s): 8080
+Started SnapQueueApplication in x.xxx seconds
+```
+
+**Step 5 — Open in browser:**
+```
+http://localhost:8080/login.html
+```
+
+---
+
+### 6. Verify Database (Optional)
+
+Open MySQL Workbench or run in terminal:
+```bash
+mysql -u root -p
+```
+```sql
+USE snapqueuedb;
+SHOW TABLES;
+SELECT * FROM employee;
+SELECT * FROM feedback;
+```
+
+---
+
+### 7. Quick Command Reference
+
+| Task | Command |
+|---|---|
+| Check Java version | `java -version` |
+| Check Maven version | `mvn -version` |
+| Check Git version | `git --version` |
+| Check MySQL port | `mysql> SHOW VARIABLES LIKE 'port';` |
+| Clone project | `git clone https://github.com/VineetS46/SnapQueue.git` |
+| Build project | `mvn clean install -DskipTests` |
+| Run project | `mvn spring-boot:run` |
+| Stop project | `Ctrl + C` in terminal |
+| Open app | `http://localhost:8080/login.html` |
