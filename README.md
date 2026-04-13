@@ -81,64 +81,6 @@ static/
 
 ---
 
-## Setup & Run
-
-### Prerequisites
-- Java 17+
-- Maven 3.8+
-- MySQL 8.x running on port **3308**
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/VineetS46/SnapQueue.git
-cd SnapQueue
-```
-
-### 2. Install Maven
-```bash
-winget install Apache.Maven
-```
-Verify:
-```bash
-mvn -version
-```
-
-### 3. Install Maven
-```bash
-winget install Apache.Maven
-```
-Verify:
-```bash
-mvn -version
-```
-
-### 4. Configure MySQL
-Open `src/main/resources/application.properties` and update your password:
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3308/snapqueuedb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
-spring.datasource.username=root
-spring.datasource.password=your_mysql_password
-```
-
-### 5. Install dependencies
-```bash
-mvn clean install -DskipTests
-```
-
-### 6. Run the application
-```bash
-mvn spring-boot:run
-```
-
-### 7. Open in browser
-```
-http://localhost:8080/login.html
-```
-
-The database and tables are created automatically on first run. Sample data is seeded by `DataLoader` on startup.
-
----
-
 ## Default Credentials (seeded on startup)
 
 | Role | Email / Employee ID | Password |
@@ -200,147 +142,112 @@ SELECT * FROM feedback;
 
 ---
 
-## License
+## Setup & Run
 
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
-## Installation Guide - Everything You Need
-
-Follow these steps from scratch on a fresh Windows machine.
+### Prerequisites
+- Java 17+
+- Maven 3.8+
+- MySQL 8.x
+- Git
 
 ---
 
-### 1. Install Java 17
+### Step 1 - Install Java 17
 
-**Download:**
-https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
+Download: https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
 
-Pick -> `Windows x64 Installer (.exe)` -> install it.
+Pick `Windows x64 Installer (.exe)` and install it.
 
-**Verify installation:**
+Verify:
 ```bash
 java -version
 ```
-Expected output:
-```
-java version "17.x.x"
-```
 
-**Set JAVA_HOME (if not auto-set):**
+Set JAVA_HOME if not auto-set:
 ```
-In Windows search -> "Environment Variables"
-Under System Variables -> New
+Windows Search -> Environment Variables -> System Variables -> New
 Variable name:  JAVA_HOME
 Variable value: C:\Program Files\Java\jdk-17
 
-Then edit PATH -> add:  %JAVA_HOME%\bin
+Edit PATH -> Add:  %JAVA_HOME%\bin
 ```
 
 ---
 
-### 2. Install Maven
+### Step 2 - Install Maven
 
-**Option A - Install via winget (recommended, one command):**
+Option A - via winget (recommended):
 ```bash
 winget install Apache.Maven
 ```
 
-**Option B - Install via Chocolatey:**
+Option B - via Chocolatey:
 ```bash
 choco install maven
 ```
-To install Chocolatey first, run this in PowerShell as Administrator:
-```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-```
 
-**Option C - Manual download:**
-https://maven.apache.org/download.cgi
-
-Pick -> `apache-maven-3.x.x-bin.zip` -> extract to `C:\maven`
-
-Then set environment variables manually:
+Option C - Manual:
+Download from https://maven.apache.org/download.cgi
+Extract to `C:\maven` then set:
 ```
 System Variables -> New
 Variable name:  MAVEN_HOME
 Variable value: C:\maven\apache-maven-3.x.x
 
-Edit PATH -> add:  %MAVEN_HOME%\bin
+Edit PATH -> Add:  %MAVEN_HOME%\bin
 ```
 
-**Verify installation:**
+Verify:
 ```bash
 mvn -version
-```
-Expected output:
-```
-Apache Maven 3.x.x
-Java version: 17.x.x
 ```
 
 ---
 
-### 3. Install MySQL
+### Step 3 - Install MySQL
 
-**Download MySQL Installer:**
-https://dev.mysql.com/downloads/installer/
+Download: https://dev.mysql.com/downloads/installer/
 
-Pick -> `mysql-installer-community-8.x.x.msi` -> run installer.
+Pick `mysql-installer-community-8.x.x.msi` and run it.
+- Choose Developer Default setup
+- Set a root password (you will need this later)
+- Note your port (default is 3306, this project uses 3308)
 
-During setup:
-- Choose **Developer Default** setup type
-- Set root password (remember it - you will need it in `application.properties`)
-- Default port is `3306` - if yours is `3308`, note that down
-
-**Verify MySQL is running:**
+Verify:
 ```bash
 mysql -u root -p
 ```
-Enter your password. You should see the MySQL prompt:
-```
-mysql>
-```
 
-**Check which port MySQL is on:**
+Check your port:
 ```sql
 SHOW VARIABLES LIKE 'port';
 ```
 
-Type `exit` to quit.
-
 ---
 
-### 4. Install Git
+### Step 4 - Install Git
 
-**Download:**
-https://git-scm.com/download/win
+Download: https://git-scm.com/download/win
 
-Run the installer with default options.
-
-**Verify installation:**
+Verify:
 ```bash
 git --version
 ```
-Expected output:
-```
-git version 2.x.x.windows.x
-```
 
 ---
 
-### 5. Clone & Run SnapQueue
+### Step 5 - Clone the Repository
 
-**Step 1 - Clone the repository:**
 ```bash
 git clone https://github.com/VineetS46/SnapQueue.git
 cd SnapQueue
 ```
 
-**Step 2 - Update your MySQL password:**
+---
 
-Open `src/main/resources/application.properties` and edit:
+### Step 6 - Configure MySQL Password
+
+Open `src/main/resources/application.properties` and update:
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3308/snapqueuedb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
 spring.datasource.username=root
@@ -348,12 +255,18 @@ spring.datasource.password=your_mysql_password_here
 ```
 Change `3308` to `3306` if that is your MySQL port.
 
-**Step 3 - Build the project:**
+---
+
+### Step 7 - Install Dependencies
+
 ```bash
 mvn clean install -DskipTests
 ```
 
-**Step 4 - Run the application:**
+---
+
+### Step 8 - Run the Application
+
 ```bash
 mvn spring-boot:run
 ```
@@ -364,38 +277,36 @@ Tomcat started on port(s): 8080
 Started SnapQueueApplication in x.xxx seconds
 ```
 
-**Step 5 - Open in browser:**
+---
+
+### Step 9 - Open in Browser
+
 ```
 http://localhost:8080/login.html
 ```
 
----
-
-### 6. Verify Database (Optional)
-
-Open MySQL Workbench or run in terminal:
-```bash
-mysql -u root -p
-```
-```sql
-USE snapqueuedb;
-SHOW TABLES;
-SELECT * FROM employee;
-SELECT * FROM feedback;
-```
+The database and all tables are created automatically on first run.
+Sample data (admin, manager, employee + feedbacks) is seeded by DataLoader on startup.
 
 ---
 
-### 7. Quick Command Reference
+## Quick Command Reference
 
 | Task | Command |
 |---|---|
-| Check Java version | `java -version` |
-| Check Maven version | `mvn -version` |
-| Check Git version | `git --version` |
-| Check MySQL port | `SHOW VARIABLES LIKE 'port';` |
+| Check Java | `java -version` |
+| Check Maven | `mvn -version` |
+| Check Git | `git --version` |
+| Install Maven | `winget install Apache.Maven` |
 | Clone project | `git clone https://github.com/VineetS46/SnapQueue.git` |
-| Build project | `mvn clean install -DskipTests` |
+| Install dependencies | `mvn clean install -DskipTests` |
 | Run project | `mvn spring-boot:run` |
-| Stop project | `Ctrl + C` in terminal |
+| Stop project | `Ctrl + C` |
 | Open app | `http://localhost:8080/login.html` |
+| Check MySQL port | `SHOW VARIABLES LIKE 'port';` |
+
+---
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
