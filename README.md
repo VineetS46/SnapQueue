@@ -220,12 +220,26 @@ java version "17.x.x"
 
 ### 2. Install Maven
 
-**Download:**
+**Option A — Install via winget (recommended, one command):**
+```bash
+winget install Apache.Maven
+```
+
+**Option B — Install via Chocolatey:**
+```bash
+choco install maven
+```
+> To install Chocolatey first, run this in PowerShell as Administrator:
+> ```powershell
+> Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+> ```
+
+**Option C — Manual download:**
 https://maven.apache.org/download.cgi
 
 Pick → `apache-maven-3.x.x-bin.zip` → extract to `C:\maven`
 
-**Set environment variables:**
+Then set environment variables manually:
 ```bash
 # System Variables → New
 # Variable name:  MAVEN_HOME
