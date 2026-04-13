@@ -1,10 +1,10 @@
-# 📬 SnapQueue — Anonymous Office Feedback System
+# SnapQueue - Anonymous Office Feedback System
 
 A full-stack Spring Boot web application that allows employees to anonymously submit workplace feedback with a structured approval workflow across three role-based dashboards.
 
 ---
 
-## 🚀 Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -16,7 +16,7 @@ A full-stack Spring Boot web application that allows employees to anonymously su
 
 ---
 
-## 👥 Roles & Access
+## Roles & Access
 
 | Role | Can Do |
 |---|---|
@@ -26,23 +26,23 @@ A full-stack Spring Boot web application that allows employees to anonymously su
 
 ---
 
-## 🔄 Feedback Status Flow
+## Feedback Status Flow
 
 ```
-EMPLOYEE submits → PENDING
-MANAGER reviews  → APPROVED or REJECTED
-ADMIN acts       → RESOLVED
+EMPLOYEE submits  -->  PENDING
+MANAGER reviews   -->  APPROVED or REJECTED
+ADMIN acts        -->  RESOLVED
 ```
 
 | Transition | Who |
 |---|---|
-| PENDING → APPROVED | MANAGER only |
-| PENDING → REJECTED | MANAGER only (with reason) |
-| APPROVED → RESOLVED | ADMIN only |
+| PENDING -> APPROVED | MANAGER only |
+| PENDING -> REJECTED | MANAGER only (with reason) |
+| APPROVED -> RESOLVED | ADMIN only |
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 com.snapqueue
@@ -71,17 +71,17 @@ com.snapqueue
 static/
 ├── login.html
 ├── register.html
-├── index.html                  ← role-based router
+├── index.html                  <- role-based router
 ├── employee-dashboard.html
 ├── manager-dashboard.html
 ├── admin-dashboard.html
 ├── submit.html
-└── manage.html                 ← redirects to manager-dashboard
+└── manage.html                 <- redirects to manager-dashboard
 ```
 
 ---
 
-## ⚙️ Setup & Run
+## Setup & Run
 
 ### Prerequisites
 - Java 17+
@@ -125,7 +125,7 @@ The database and tables are created automatically on first run. Sample data is s
 
 ---
 
-## 🔐 Default Credentials (seeded on startup)
+## Default Credentials (seeded on startup)
 
 | Role | Email / Employee ID | Password |
 |---|---|---|
@@ -137,7 +137,7 @@ The database and tables are created automatically on first run. Sample data is s
 
 ---
 
-## 🌐 Pages
+## Pages
 
 | URL | Page | Access |
 |---|---|---|
@@ -151,7 +151,7 @@ The database and tables are created automatically on first run. Sample data is s
 
 ---
 
-## 📡 REST API Endpoints
+## REST API Endpoints
 
 ### Auth
 | Method | Endpoint | Description |
@@ -175,7 +175,7 @@ The database and tables are created automatically on first run. Sample data is s
 
 ---
 
-## 🗄️ MySQL Workbench
+## MySQL Workbench
 
 After running the app, you can inspect data directly:
 ```sql
@@ -186,14 +186,13 @@ SELECT * FROM feedback;
 
 ---
 
-
-## 📄 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-## 🛠️ Installation Guide — Everything You Need
+## Installation Guide - Everything You Need
 
 Follow these steps from scratch on a fresh Windows machine.
 
@@ -204,7 +203,7 @@ Follow these steps from scratch on a fresh Windows machine.
 **Download:**
 https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
 
-Pick → `Windows x64 Installer (.exe)` → install it.
+Pick -> `Windows x64 Installer (.exe)` -> install it.
 
 **Verify installation:**
 ```bash
@@ -216,45 +215,45 @@ java version "17.x.x"
 ```
 
 **Set JAVA_HOME (if not auto-set):**
-```bash
-# In Windows search → "Environment Variables"
-# Under System Variables → New
-# Variable name:  JAVA_HOME
-# Variable value: C:\Program Files\Java\jdk-17
-#
-# Then edit PATH → add:  %JAVA_HOME%\bin
+```
+In Windows search -> "Environment Variables"
+Under System Variables -> New
+Variable name:  JAVA_HOME
+Variable value: C:\Program Files\Java\jdk-17
+
+Then edit PATH -> add:  %JAVA_HOME%\bin
 ```
 
 ---
 
 ### 2. Install Maven
 
-**Option A — Install via winget (recommended, one command):**
+**Option A - Install via winget (recommended, one command):**
 ```bash
 winget install Apache.Maven
 ```
 
-**Option B — Install via Chocolatey:**
+**Option B - Install via Chocolatey:**
 ```bash
 choco install maven
 ```
-> To install Chocolatey first, run this in PowerShell as Administrator:
-> ```powershell
-> Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-> ```
+To install Chocolatey first, run this in PowerShell as Administrator:
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+```
 
-**Option C — Manual download:**
+**Option C - Manual download:**
 https://maven.apache.org/download.cgi
 
-Pick → `apache-maven-3.x.x-bin.zip` → extract to `C:\maven`
+Pick -> `apache-maven-3.x.x-bin.zip` -> extract to `C:\maven`
 
 Then set environment variables manually:
-```bash
-# System Variables → New
-# Variable name:  MAVEN_HOME
-# Variable value: C:\maven\apache-maven-3.x.x
-#
-# Edit PATH → add:  %MAVEN_HOME%\bin
+```
+System Variables -> New
+Variable name:  MAVEN_HOME
+Variable value: C:\maven\apache-maven-3.x.x
+
+Edit PATH -> add:  %MAVEN_HOME%\bin
 ```
 
 **Verify installation:**
@@ -274,12 +273,12 @@ Java version: 17.x.x
 **Download MySQL Installer:**
 https://dev.mysql.com/downloads/installer/
 
-Pick → `mysql-installer-community-8.x.x.msi` → run installer.
+Pick -> `mysql-installer-community-8.x.x.msi` -> run installer.
 
 During setup:
 - Choose **Developer Default** setup type
-- Set root password (remember it — you'll need it in `application.properties`)
-- Default port is `3306` — if yours is `3308`, note that down
+- Set root password (remember it - you will need it in `application.properties`)
+- Default port is `3306` - if yours is `3308`, note that down
 
 **Verify MySQL is running:**
 ```bash
@@ -319,13 +318,13 @@ git version 2.x.x.windows.x
 
 ### 5. Clone & Run SnapQueue
 
-**Step 1 — Clone the repository:**
+**Step 1 - Clone the repository:**
 ```bash
 git clone https://github.com/VineetS46/SnapQueue.git
 cd SnapQueue
 ```
 
-**Step 2 — Update your MySQL password:**
+**Step 2 - Update your MySQL password:**
 
 Open `src/main/resources/application.properties` and edit:
 ```properties
@@ -333,14 +332,14 @@ spring.datasource.url=jdbc:mysql://localhost:3308/snapqueuedb?createDatabaseIfNo
 spring.datasource.username=root
 spring.datasource.password=your_mysql_password_here
 ```
-> Change `3308` to `3306` if that's your MySQL port.
+Change `3308` to `3306` if that is your MySQL port.
 
-**Step 3 — Build the project:**
+**Step 3 - Build the project:**
 ```bash
 mvn clean install -DskipTests
 ```
 
-**Step 4 — Run the application:**
+**Step 4 - Run the application:**
 ```bash
 mvn spring-boot:run
 ```
@@ -351,7 +350,7 @@ Tomcat started on port(s): 8080
 Started SnapQueueApplication in x.xxx seconds
 ```
 
-**Step 5 — Open in browser:**
+**Step 5 - Open in browser:**
 ```
 http://localhost:8080/login.html
 ```
@@ -380,7 +379,7 @@ SELECT * FROM feedback;
 | Check Java version | `java -version` |
 | Check Maven version | `mvn -version` |
 | Check Git version | `git --version` |
-| Check MySQL port | `mysql> SHOW VARIABLES LIKE 'port';` |
+| Check MySQL port | `SHOW VARIABLES LIKE 'port';` |
 | Clone project | `git clone https://github.com/VineetS46/SnapQueue.git` |
 | Build project | `mvn clean install -DskipTests` |
 | Run project | `mvn spring-boot:run` |
