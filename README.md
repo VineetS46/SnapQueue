@@ -103,7 +103,16 @@ Verify:
 mvn -version
 ```
 
-### 3. Configure MySQL
+### 3. Install Maven
+```bash
+winget install Apache.Maven
+```
+Verify:
+```bash
+mvn -version
+```
+
+### 4. Configure MySQL
 Open `src/main/resources/application.properties` and update your password:
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3308/snapqueuedb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
@@ -111,12 +120,17 @@ spring.datasource.username=root
 spring.datasource.password=your_mysql_password
 ```
 
-### 4. Run the application
+### 5. Install dependencies
+```bash
+mvn clean install -DskipTests
+```
+
+### 6. Run the application
 ```bash
 mvn spring-boot:run
 ```
 
-### 5. Open in browser
+### 7. Open in browser
 ```
 http://localhost:8080/login.html
 ```
